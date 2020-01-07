@@ -10,8 +10,12 @@ class App extends React.Component {
       isFethingJoke: false
     }
   }
-  
-  onTellJoke = () => {
+
+  componentDidMount(){
+    this.fetchJoke()
+  }
+
+  fetchJoke = () => {
     this.setState({isFethingJoke:true})
     fetch('https://icanhazdadjoke.com/', {
       method: 'GET',
@@ -29,10 +33,13 @@ class App extends React.Component {
       }
       )
   }
+  onTellJoke = () => {
+    this.fetchJoke()
+  }
   render() {
     return (
       <div>
-        <button onClick={this.onTellJoke}>Tell me a joke!</button>
+        <button onClick={this.onTellJoke} disabled={this.state.isFethingJoke}>Tell me a joke!</button>
         <p>{this.state.isFethingJoke ? "Loading.." : this.state.joke}</p>
       </div>
     )
