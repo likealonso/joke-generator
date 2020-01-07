@@ -6,10 +6,13 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      joke: null
+      joke: null,
+      isFethingJoke: false
     }
   }
+  
   onTellJoke = () => {
+    this.setState({isFethingJoke:true})
     fetch('https://icanhazdadjoke.com/', {
       method: 'GET',
       headers: {
@@ -18,7 +21,8 @@ class App extends React.Component {
     }).then(response => response.json())
       .then(json => {
         this.setState({
-          joke: json.joke
+          joke: json.joke,
+          isFethingJoke: false
 
         })
         console.log(json.joke)
@@ -29,7 +33,7 @@ class App extends React.Component {
     return (
       <div>
         <button onClick={this.onTellJoke}>Tell me a joke!</button>
-        <p>{this.state.joke}</p>
+        <p>{this.state.isFethingJoke ? "Loading.." : this.state.joke}</p>
       </div>
     )
   }
